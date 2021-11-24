@@ -1,40 +1,31 @@
 {
   "files": {
     "main.css": "/static/css/main.6b86c434.chunk.css",
-    "main.js": "/static/js/main.cc35da35.chunk.js",
-    "main.js.map": "/static/js/main.cc35da35.chunk.js.map",
+    "main.js": "/static/js/main.5d015dfa.chunk.js",
+    "main.js.map": "/static/js/main.5d015dfa.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.9f94ff00.js",
     "runtime-main.js.map": "/static/js/runtime-main.9f94ff00.js.map",
-    "static/js/2.55ec6372.chunk.js": "/static/js/2.55ec6372.chunk.js",
-    "static/js/2.55ec6372.chunk.js.map": "/static/js/2.55ec6372.chunk.js.map",
+    "static/js/2.6e16b2d8.chunk.js": "/static/js/2.6e16b2d8.chunk.js",
+    "static/js/2.6e16b2d8.chunk.js.map": "/static/js/2.6e16b2d8.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.1e3649123755cd8e467c847d705d8693.js": "/precache-manifest.1e3649123755cd8e467c847d705d8693.js",
+    "precache-manifest.b1efafc9f8bf0ea29c1a852d5c4372bd.js": "/precache-manifest.b1efafc9f8bf0ea29c1a852d5c4372bd.js",
     "service-worker.js": "/service-worker.js",
     "static/css/main.6b86c434.chunk.css.map": "/static/css/main.6b86c434.chunk.css.map",
-    "static/js/2.55ec6372.chunk.js.LICENSE.txt": "/static/js/2.55ec6372.chunk.js.LICENSE.txt",
-    "static/media/banisi-logo-desaturated.png": "/static/media/banisi-logo-desaturated.3e8df241.png",
-    "static/media/banisi-logo.png": "/static/media/banisi-logo.3e8df241.png",
-    "static/media/global-bank-logo-desaturated.png": "/static/media/global-bank-logo-desaturated.60c32fb1.png",
-    "static/media/global-bank-logo.png": "/static/media/global-bank-logo.631abb1f.png",
+    "static/js/2.6e16b2d8.chunk.js.LICENSE.txt": "/static/js/2.6e16b2d8.chunk.js.LICENSE.txt",
     "static/media/home-step-1.png": "/static/media/home-step-1.62b21fac.png",
     "static/media/home-step-2.png": "/static/media/home-step-2.4bba2754.png",
     "static/media/home-step-3.png": "/static/media/home-step-3.bc4d62e0.png",
     "static/media/img-rechazo.jpg": "/static/media/img-rechazo.7a6c96fb.jpg",
     "static/media/logo-horizontal-white.png": "/static/media/logo-horizontal-white.329a4346.png",
-    "static/media/logo-vertical.jpg": "/static/media/logo-vertical.efde73b6.jpg",
-    "static/media/multibank-logo-desaturated.png": "/static/media/multibank-logo-desaturated.05913fab.png",
-    "static/media/multibank-logo.png": "/static/media/multibank-logo.5da7572f.png",
     "static/media/pop-picture-falta-poco.jpg": "/static/media/pop-picture-falta-poco.0bdab8c8.jpg",
     "static/media/pop-picture-upload-doc.jpg": "/static/media/pop-picture-upload-doc.e82128da.jpg",
     "static/media/slide-1-mobile.jpg": "/static/media/slide-1-mobile.d381692e.jpg",
-    "static/media/slide-1.jpg": "/static/media/slide-1.251f7e62.jpg",
-    "static/media/st-george-logo-desaturated.png": "/static/media/st-george-logo-desaturated.9086b7b8.png",
-    "static/media/st-george-logo.png": "/static/media/st-george-logo.dc905028.png"
+    "static/media/slide-1.jpg": "/static/media/slide-1.251f7e62.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.9f94ff00.js",
-    "static/js/2.55ec6372.chunk.js",
+    "static/js/2.6e16b2d8.chunk.js",
     "static/css/main.6b86c434.chunk.css",
-    "static/js/main.cc35da35.chunk.js"
+    "static/js/main.5d015dfa.chunk.js"
   ]
 }

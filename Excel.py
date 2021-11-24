@@ -1,42 +1,4 @@
 
-
-tabla = "profesions_acp"
-host = "localhost"
-user = "root"
-password = ""
-database = "finanservs"
-
-#********************************
-# Dockert
-#********************************
-# host='localhost',
-# database='finanservs',
-# user='rsanchez',
-# password='cafekotowa'
-#********************************
- 
-# import pandas as pd
-# xls = pd.read_excel(fichero)
-# print(xls.columns)
-# values = xls['Titulo'].values
-# print(values)
-
-# import pandas as pd
-# xls = pd.ExcelFile(fichero)
-# print(xls.sheet_names)
-# df = xls.parse('Original')
-# print(df)
-
-# # MySql de James - IS
-# cnn = mysql.connector.connect(
-#     host="69.10.63.218",
-#     database="finanservs",
-#     user="AdminFinanservs",
-#     password="0t_pYv70"     
-# )
-
-
-
 import mysql.connector
 
 def insert_acp(id, titulo, grupo, segmento, cnn):
@@ -192,36 +154,13 @@ def insert_corr(id, idDist, idProv, name, cnn):
 # libresia para excel
 import openpyxl
 
-# # credenciales de la cuenta de correo
-# username = input("Ingrese su nombre de usuario: ")
-# password = getpass.getpass("Ingrese su password: ")
-
-# # Crear la conexion
-# context = ssl.create_default_context()
-
-# with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-#     server.login(username, password)
-#     print("Inició sesión")
-
-#     destino = "email"
-#     mensaje = "Cuerpo del correo"
-#     server.sendmail(username, destino, mensaje)
-
-
 def fcnn():
-    # return mysql.connector.connect(
-    # host="134.122.114.209",
-    # database="finanservs",
-    # user="dbkotowa",
-    # password="lr1wapia8dem9cla",
-    # port="3306"
-
     return mysql.connector.connect(
-    host="db-mysql-nyc3-04501-do-user-7220305-0.b.db.ondigitalocean.com",
-    user="dbkotowa",
-    password="tgxs08h92dmgnrcf",
+    host="finanservs.cdxgqqkffqvx.us-east-2.rds.amazonaws.com",
+    user="admin",
+    password="Cooprac2616",
     database="finanservs",
-    port="25060"
+    port="3306"
 )
 
 # # No. 1
