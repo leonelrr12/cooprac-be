@@ -37,7 +37,7 @@ const MONGODB_URI = ""
 
 // Check connection
 cnn.connect(error => {
-  if (error) throw error;
+  // if (error) throw error;
   console.log('Database server runnuning!', cnn.host);
 })
 
