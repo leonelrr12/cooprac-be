@@ -1,5 +1,8 @@
 node_modules
 request.rest
 
-.env
+#.env
 subidas
+pdfs 
+tables*
+*.py
