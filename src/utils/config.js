@@ -2,7 +2,7 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const mysql = require('mysql2')
 const mysql2Timeout = require('mysql2-timeout-additions');
-const MAX_QUERY_EXECUTION_TIME_SECONDS = 35;
+const MAX_QUERY_EXECUTION_TIME_SECONDS = 100;
 
 const PORT = process.env.PORT || 3001
 const HOST = process.env.HOST
