@@ -1,8 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 const mysql = require('mysql2')
-const mysql2Timeout = require('mysql2-timeout-additions');
-const MAX_QUERY_EXECUTION_TIME_SECONDS = 100;
 
 const PORT = process.env.PORT || 3001
 const HOST = process.env.HOST
@@ -17,7 +15,7 @@ const MDB_PORT = process.env.MDB_PORT
 const MDB_PROTOCOL = process.env.MDB_PROTOCOL
 
 
-//SMTP gmail
+// SMTP gmail
 const EMAIL_USER = process.env.EMAIL_USER
 const EMAIL_PASS = process.env.EMAIL_PASS
 const EMAIL_FROM = process.env.EMAIL_FROM
@@ -25,29 +23,29 @@ const EMAIL_PORT = process.env.EMAIL_PORT
 
 
 // MySql DB
-// const cnn = mysql.createConnection({
-//     host: process.env.DB_HOST,
-//     database: process.env.DATABASE,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PWD,
-//     port: process.env.PORTDB
-// })
+const cnn = mysql.createConnection({
+    host: process.env.DB_HOST,
+    database: process.env.DATABASE,
+    user: process.env.DB_USER,
+    password: process.env.DB_PWD,
+    port: process.env.PORTDB
+})
 
 
-const cnn = mysql.createPool({
-  connectionLimit : 100,
-  host: process.env.DB_HOST,
-  database: process.env.DATABASE,
-  user: process.env.DB_USER,
-  password: process.env.DB_PWD,
-  port: process.env.PORTDB
-});
-const promisePool = cnn.promise();
+// const cnn = mysql.createPool({
+//   connectionLimit : 100,
+//   host: process.env.DB_HOST,
+//   database: process.env.DATABASE,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PWD,
+//   port: process.env.PORTDB
+// });
+// const promisePool = cnn.promise();
 
-mysql2Timeout.addTimeoutToPromisePool({ 
-  pool: promisePool, 
-  seconds: MAX_QUERY_EXECUTION_TIME_SECONDS 
-});
+// mysql2Timeout.addTimeoutToPromisePool({ 
+//   pool: promisePool, 
+//   seconds: MAX_QUERY_EXECUTION_TIME_SECONDS 
+// });
 
 
 // MongoDB DIgital Ocean-2
@@ -55,18 +53,18 @@ mysql2Timeout.addTimeoutToPromisePool({
 const MONGODB_URI = ""
 
 // Check connection
-cnn.query("select * from profesions", (err, data) => {
-  if(err) {
-    console.log(err)
-    return
-  } 
-  console.log(data)
-})
-
-// cnn.connect(error => {
-//   if (error) throw error;
-//   console.log('Database server runnuning!');
+// cnn.query("select * from profesions", (err, data) => {
+//   if(err) {
+//     console.log(err)
+//     return
+//   } 
+//   console.log(data)
 // })
+
+cnn.connect(error => {
+  if (error) throw error;
+  console.log('Database server runnuning!');
+})
 
 
 module.exports = {
