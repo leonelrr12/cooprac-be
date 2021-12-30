@@ -1288,7 +1288,7 @@ appRoutes.get('/laboral_sector_entity_f', (request, response) => {
   sql += " from entity_params a"
   sql += " inner join entities_f d on d.id = a.id_entity_f"
   sql += " inner join sector_profesion b on b.id=a.id_sector_profesion"
-  sql += " where d.is_active = 1"
+  // sql += " where d.is_active = 1"
   // sql += " where a.id_entity_f = ? and a.id_code = ? and a.id_profesion = ?"
 
   const params = [request.params.id,  request.params.id2, request.params.id3];
