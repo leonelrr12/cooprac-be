@@ -22,49 +22,21 @@ const EMAIL_FROM = process.env.EMAIL_FROM
 const EMAIL_PORT = process.env.EMAIL_PORT
 
 
-// MySql DB
-const cnn = mysql.createConnection({
-    host: process.env.DB_HOST,
-    database: process.env.DATABASE,
-    user: process.env.DB_USER,
-    password: process.env.DB_PWD,
-    port: process.env.PORTDB
-})
-
-
-// const cnn = mysql.createPool({
-//   connectionLimit : 100,
-//   host: process.env.DB_HOST,
-//   database: process.env.DATABASE,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PWD,
-//   port: process.env.PORTDB
-// });
-// const promisePool = cnn.promise();
-
-// mysql2Timeout.addTimeoutToPromisePool({ 
-//   pool: promisePool, 
-//   seconds: MAX_QUERY_EXECUTION_TIME_SECONDS 
-// });
-
-
 // MongoDB DIgital Ocean-2
-// const MONGODB_URI = "mongodb+srv://doadmin:30x814oJ67N2gyYW@db-mongodb-nyc3-97071-024615bf.mongo.ondigitalocean.com/Finanservs?authSource=admin&replicaSet=db-mongodb-nyc3-97071&tls=true&tlsCAFile=ca-certificate-MDB.crt"
-const MONGODB_URI = ""
+const MONGODB_URI = "mongodb+srv://doadmin:30x814oJ67N2gyYW@db-mongodb-nyc3-97071-024615bf.mongo.ondigitalocean.com/Coopracrl?authSource=admin&replicaSet=db-mongodb-nyc3-97071&tls=true&tlsCAFile=ca-certificate-MDB.crt"
 
-// Check connection
-// cnn.query("select * from profesions", (err, data) => {
-//   if(err) {
-//     console.log(err)
-//     return
-//   } 
-//   console.log(data)
-// })
 
-cnn.connect(error => {
-  if (error) throw error;
-  console.log('Database server runnuning!');
-})
+// MySql DIgital Ocean-2
+const cnn = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  database: process.env.DATABASE,
+  password: process.env.DB_PWD,
+  port: process.env.PORTDB,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
 
 
 module.exports = {
