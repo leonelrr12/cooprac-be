@@ -51,11 +51,11 @@ admRoutes.post('/prospects', (request, response) => {
   sql += " entity_f,estado,email,cellphone,phoneNumber,idUrl,socialSecurityProofUrl,"
   sql += " publicGoodProofUrl,workLetterUrl,payStubUrl,origin_idUser,gender,birthDate,"
   sql += " contractType,jobSector,occupation,paymentFrecuency,profession,residenceType,"
-  sql += " civil_status,province,district,salary,fcreate,fupdate,quotation,application,sign,"
+  sql += " civil_status,province,district,salary,sign,"
   sql += " loanPP,loanAuto,loanTC,loanHip,cashOnHand,plazo,apcReferenceUrl,apcLetterUrl)"
-  sql += " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,now(),now(),?,?,?,?,?,?,?,?,?,?,?)"
+  sql += " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
-  let {id_personal,idUser,apcReferencesUrl,apcLetterUrl,sponsor,name,fname,fname_2,lname,lname_2,entity_f,estado,email,cellphone,phoneNumber,idUrl,socialSecurityProofUrl,publicGoodProofUrl,workLetterUrl,payStubUrl,origin_idUser,gender,birthDate,contractType,jobSector,occupation,paymentFrecuency,profession,residenceType,civil_status,province,district,salary,quotation,application,sign,loanPP,loanAuto,loanTC,loanHip,cashOnHand,plazo} = request.body
+  let {id_personal,idUser,apcReferencesUrl,apcLetterUrl,sponsor,name,fname,fname_2,lname,lname_2,entity_f,estado,email,cellphone,phoneNumber,idUrl,socialSecurityProofUrl,publicGoodProofUrl,workLetterUrl,payStubUrl,origin_idUser,gender,birthDate,contractType,jobSector,occupation,paymentFrecuency,profession,residenceType,civil_status,province,district,salary,sign,loanPP,loanAuto,loanTC,loanHip,cashOnHand,plazo} = request.body
 
   estado = 1 // Nuevo registro queda con estatus de nuevo
 
@@ -63,10 +63,10 @@ admRoutes.post('/prospects', (request, response) => {
   if(cellphone === undefined) cellphone = 'N/A'
   
   birthDate = birthDate.slice(0,10)
-  const params = [id_personal,sponsor,idUser,name,fname,fname_2,lname,lname_2,entity_f,estado,email,cellphone,phoneNumber,idUrl,socialSecurityProofUrl,publicGoodProofUrl,workLetterUrl,payStubUrl,origin_idUser,gender,birthDate,contractType,jobSector,occupation,paymentFrecuency,profession,residenceType,civil_status,province,district,salary,quotation,application,sign,loanPP,loanAuto,loanTC,loanHip,cashOnHand,plazo,apcReferencesUrl,apcLetterUrl]
+  const params = [id_personal,sponsor,idUser,name,fname,fname_2,lname,lname_2,entity_f,estado,email,cellphone,phoneNumber,idUrl,socialSecurityProofUrl,publicGoodProofUrl,workLetterUrl,payStubUrl,origin_idUser,gender,birthDate,contractType,jobSector,occupation,paymentFrecuency,profession,residenceType,civil_status,province,district,salary,sign,loanPP,loanAuto,loanTC,loanHip,cashOnHand,plazo,apcReferencesUrl,apcLetterUrl]
 
-  console.log(request.body);
-  console.log(params);
+  // console.log(sql);
+  // console.log(params);
   // response.send('Ok!')
 
   config.cnn.query(sql, params, (error, results, next) => {
@@ -132,6 +132,7 @@ admRoutes.get('/prospects/aproach/:id_personal', (request, response) => {
   sql += " INNER JOIN estados_tramite c ON c.id=a.estado"
   sql += " WHERE id_personal = ?"
 
+  // console.log(sql)
   const params = [request.params.id_personal];
   config.cnn.query(sql, params, (error, results) => {
     if (error) {

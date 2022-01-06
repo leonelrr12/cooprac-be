@@ -17,6 +17,68 @@ appRoutes.get('/today-is', (request, response) => {
   response.json({ hoyes: dt2 })
 })
 
+appRoutes.get('/prospects', (request, response) => {
+  let sql = "select	sign"
+  sql += " FROM prospects a"
+  sql += " WHERE id_personal = '3-722-1667'"
+
+  const params = [request.params.id_personal];
+  config.cnn.query(sql, params, (error, results) => {
+    if (error) {
+      logger.error('Error SQL:', error.sqlMessage)
+      response.status(500)
+    } 
+    if (results.length > 0) {
+      const firma = results[0].sign.toString()
+      response.json({sign: firma})
+    } else {
+      response.send('Not results!')
+    }
+  })
+})
+
+appRoutes.post('/apc-historial', async (req, res) => {
+
+  await mongoose.connect(config.MONGODB_URI, {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+  })
+    .then(() => console.log('MongoDB Connected...'))
+    .catch((err) => console.log(err))
+
+    const {
+      Nombre,
+      Apellido_Paterno,
+      Email,
+    } = req.body
+
+  const newProspect =  new Prospect({
+    Email,
+    Nombre,
+    Apellido_Paterno,
+  })
+
+  await newProspect.save()
+  let ID = newProspect._id
+  console.log(ID)
+
+  res.send(ID)
+})
+appRoutes.get('/tracking/:email', cors(), (req, res) => {
+
+  const { email } = req.params
+
+  mongoose.connect(config.MONGODB_URI, {
+    useNewUrlParser: true, useUnifiedTopology: true
+  })
+ 
+  Prospect.find({ "Email": email }, '_id', function (err, data) {
+    if (err) return handleError(err);
+    res.send(data)
+  })
+})
+
+
 appRoutes.post('/clientify-token', async (req, res) => {
 
   axios({
