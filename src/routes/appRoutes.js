@@ -6,6 +6,8 @@ const nodemailer = require('nodemailer')
 
 const Prospect = require('../models/Prospect')
 const config = require('../utils/config')
+const logger = require('../utils/logger')
+
 
 appRoutes.get('/', (request, response) => {
   response.send('Hola Mundo!!!')
@@ -28,7 +30,7 @@ appRoutes.get('/prospects', (request, response) => {
       logger.error('Error SQL:', error.sqlMessage)
       response.status(500)
     } 
-    if (results.length > 0) {
+    if (results?.length > 0) {
       const firma = results[0].sign.toString()
       response.json({sign: firma})
     } else {
@@ -1128,7 +1130,7 @@ appRoutes.get('/sectors', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1141,7 +1143,7 @@ appRoutes.get('/profesions', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1156,7 +1158,7 @@ appRoutes.get('/profesions/:id', (request, response) => {
   const params = [request.params.id];
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1170,7 +1172,7 @@ appRoutes.get('/profesions_acp', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1185,7 +1187,7 @@ appRoutes.get('/profesions_acp/:id', (request, response) => {
   const params = [request.params.id];
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1198,7 +1200,7 @@ appRoutes.get('/profesions_lw', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1213,7 +1215,7 @@ appRoutes.get('/profesions_lw/:id', (request, response) => {
   const params = [request.params.id];
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1226,7 +1228,7 @@ appRoutes.get('/planillas_j', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1241,7 +1243,7 @@ appRoutes.get('/planillas_j/:id', (request, response) => {
   const params = [request.params.id];
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1254,7 +1256,7 @@ appRoutes.get('/ranges_pol', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1269,7 +1271,7 @@ appRoutes.get('/ranges_pol/:id', (request, response) => {
   const params = [request.params.id];
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1283,7 +1285,7 @@ appRoutes.get('/laboral_sector_institution', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1298,7 +1300,7 @@ appRoutes.get('/institution/:id', (request, response) => {
   const params = [request.params.id];
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1316,7 +1318,7 @@ appRoutes.get('/laboral_sector', (request, response) => {
   
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1357,7 +1359,7 @@ appRoutes.get('/laboral_sector_entity_f', (request, response) => {
 
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1370,7 +1372,7 @@ appRoutes.get('/laboral_status', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1383,7 +1385,7 @@ appRoutes.get('/payment_types', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1401,7 +1403,7 @@ appRoutes.get('/housing_types', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1421,7 +1423,7 @@ appRoutes.get('/purpose', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1434,7 +1436,7 @@ appRoutes.get('/marital_status', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1449,7 +1451,7 @@ appRoutes.get('/provinces', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1464,7 +1466,7 @@ appRoutes.get('/provinces/:id', (request, response) => {
   const params = [request.params.id];
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1478,7 +1480,7 @@ appRoutes.get('/districts', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1493,7 +1495,7 @@ appRoutes.get('/districts/:id', (request, response) => {
   const params = [request.params.id];
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1507,7 +1509,7 @@ appRoutes.get('/counties', (request, response) => {
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1522,7 +1524,7 @@ appRoutes.get('/counties/:id', (request, response) => {
   const params = [request.params.id];
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1539,7 +1541,7 @@ appRoutes.get('/type_documents', (request, response) => {
       logger.error('Error SQL:', error.sqlMessage)
       response.status(500)
     } 
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1547,6 +1549,67 @@ appRoutes.get('/type_documents', (request, response) => {
   })
 })
 
+
+appRoutes.get('/marcas_autos', (request, response) => {
+  const sql = "SELECT id, name FROM marcas_autos WHERE is_active = true"
+
+  config.cnn.query(sql, (error, results) => {
+    if (error) {
+      logger.error('Error SQL:', error.sqlMessage)
+      response.status(500)
+    } 
+    if (results?.length > 0) {
+      response.json(results)
+    } else {
+      response.send('Not results!')
+    }
+  })
+})
+appRoutes.get('/modelos_autos', (request, response) => {
+  const sql = "SELECT id, id_marca, name FROM modelos_autos WHERE is_active = true"
+
+  config.cnn.query(sql, (error, results) => {
+    if (error) {
+      logger.error('Error SQL:', error.sqlMessage)
+      response.status(500)
+    } 
+    if (results?.length > 0) {
+      response.json(results)
+    } else {
+      response.send('Not results!')
+    }
+  })
+})
+appRoutes.get('/cooprac_product', (request, response) => {
+  const sql = "SELECT id, name, tasa, tasa2, plazo_max, mes_cambio_tasa FROM cooprac_product"
+
+  config.cnn.query(sql, (error, results) => {
+    if (error) {
+      logger.error('Error SQL:', error.sqlMessage)
+      response.status(500)
+    } 
+    if (results?.length > 0) {
+      response.json(results)
+    } else {
+      response.send('Not results!')
+    }
+  })
+})
+appRoutes.get('/tarifas_auto', (request, response) => {
+  const sql = "SELECT id, id_marca, id_modelo, anio_modelo, tasa, tasa2, plazo_max FROM tarifas_auto"
+
+  config.cnn.query(sql, (error, results) => {
+    if (error) {
+      logger.error('Error SQL:', error.sqlMessage)
+      response.status(500)
+    } 
+    if (results?.length > 0) {
+      response.json(results)
+    } else {
+      response.send('Not results!')
+    }
+  })
+})
 
 appRoutes.get('/terms_loan', (request, response) => {
   const sql = "SELECT id, name FROM terms_loan WHERE is_active = true"
@@ -1556,7 +1619,7 @@ appRoutes.get('/terms_loan', (request, response) => {
       logger.error('Error SQL:', error.sqlMessage)
       response.status(500)
     } 
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1572,7 +1635,7 @@ appRoutes.get('/nationality', (request, response) => {
       logger.error('Error SQL:', error.sqlMessage)
       response.status(500)
     } 
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1588,7 +1651,7 @@ appRoutes.get('/entities_f', (request, response) => {
       logger.error('Error SQL:', error.sqlMessage)
       response.status(500)
     } 
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1603,7 +1666,7 @@ appRoutes.get('/entities_f/:id', (request, response) => {
   const params = [request.params.id];
   config.cnn.query(sql, params, (error, results) => {
     if (error) throw error
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1624,7 +1687,7 @@ appRoutes.get('/sector_profesion', (request, response) => {
       logger.error('Error SQL:', error.sqlMessage)
       response.status(500)
     } 
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -1648,7 +1711,7 @@ appRoutes.get('/subgrupo_institution', (request, response) => {
       logger.error('Error SQL:', error.sqlMessage)
       response.status(500)
     } 
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')

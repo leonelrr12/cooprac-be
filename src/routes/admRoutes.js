@@ -134,7 +134,7 @@ admRoutes.get('/prospects/aproach/:id_personal', (request, response) => {
       logger.error('Error SQL:', error.sqlMessage)
       response.status(500)
     } 
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')

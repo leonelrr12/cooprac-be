@@ -23,7 +23,7 @@ loginRouter.get('/users', (request, response) => {
       logger.error('Error SQL:', error.sqlMessage)
       response.status(500)
     } 
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results)
     } else {
       response.send('Not results!')
@@ -45,7 +45,7 @@ loginRouter.get('/new-user/:email',  (request, response) => {
       logger.error('Error SQL:', error.sqlMessage)
       response.status(500)
     } 
-    if (results.length > 0) {
+    if (results?.length > 0) {
       response.json(results[0])
     } else {
       response.send('Not results!')
