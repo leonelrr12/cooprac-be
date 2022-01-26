@@ -25,11 +25,11 @@ admRoutes.post('/prospects', (request, response) => {
   sql += " department,specialty,no_ip,phoneNumber_2,"
   sql += " work_phone_2,work_phone_ext_2,startDate,"
   sql += " doctor,doctorSpecialty,healthCenter,"
-  sql += " cellPhone_2,socialSecurity,placeOfBirth,qaHealthy"
+  sql += " cellPhone_2,socialSecurity,placeOfBirth,qaHealthy,monthlyPay,product"
 
   sql += ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
   sql += "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-  sql += "?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+  sql += "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
   let {
     id_personal,idUser,apcReferencesUrl,apcLetterUrl,sponsor,
@@ -43,10 +43,10 @@ admRoutes.post('/prospects', (request, response) => {
     doctor,doctorSpecialty,healthCenter,
     cellPhone_2,socialSecurity,placeOfBirth,
     residenceType,residenceMonthly,work_name,work_cargo,work_address,work_phone,work_phone_ext,work_month,
-    work_prev_name,work_prev_month,work_prev_salary,barrio_casa_calle,
+    work_prev_name='',work_prev_month=0,work_prev_salary=0,barrio_casa_calle,
     salary,honorarios=0,viaticos=0,termConds,nationality=0,
     weight, weightUnit, height, heightUnit, aceptaAPC: aceptaApc,
-    qaHealthy
+    qaHealthy,monthlyPay,product
   } = request.body
 
   estado = 1 // Nuevo registro queda con estatus de nuevo
@@ -68,7 +68,8 @@ admRoutes.post('/prospects', (request, response) => {
     department,specialty,noIp,phoneNumber_2,
     work_phone_2,work_phone_ext_2,startDate,
     doctor,doctorSpecialty,healthCenter,
-    cellPhone_2,socialSecurity,placeOfBirth,qaHealthy
+    cellPhone_2,socialSecurity,placeOfBirth,qaHealthy,
+    monthlyPay,product
   ]
 
   console.log(sql);
