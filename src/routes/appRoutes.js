@@ -1581,7 +1581,7 @@ appRoutes.get('/modelos_autos', (request, response) => {
   })
 })
 appRoutes.get('/cooprac_product', (request, response) => {
-  const sql = "SELECT id, name, tasa, tasa2, plazo_max, mes_cambio_tasa FROM cooprac_product"
+  const sql = "SELECT * FROM cooprac_product"
 
   config.cnn.query(sql, (error, results) => {
     if (error) {

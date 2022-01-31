@@ -46,7 +46,9 @@ admRoutes.post('/prospects', (request, response) => {
     work_prev_name='N/A',work_prev_month=0,work_prev_salary=0,barrio_casa_calle,
     salary,honorarios=0,viaticos=0,termConds,nationality=0,
     weight, weightUnit, height, heightUnit, aceptaAPC: aceptaApc,
-    qaHealthy,monthlyPay,product
+    qaHealthy,monthlyPay,product,
+    marca, modelo, yyyyModelo, valorAuto, abonoAuto,
+    hipoteca, abonoHipoteca 
   } = request.body
 
   estado = 1 // Nuevo registro queda con estatus de nuevo
