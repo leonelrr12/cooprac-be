@@ -114,17 +114,15 @@ fileRoutes.post('/createPDF', async (req, res) => {
 
   try {
     result = await Prospect.find({ "Cedula": cedula }, {})
-
-    console.log('Hola por aqui-777', result)
+    
     if(!result.length) {
       return
     }
     const APC = await result[0].APC
-    console.log(APC)
     const hoyes = new Date().toLocaleString()
-    const gen = result.APC.Generales
-    const ref = result.APC.Referencias
-    const refC = result.APC.Ref_Canceladas
+    const gen = APC.Generales
+    const ref = APC.Referencias
+    const refC = APC.Ref_Canceladas
 
     // Como crear una linea
     // {canvas: [{type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1}]},

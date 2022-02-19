@@ -435,26 +435,22 @@ appRoutes.post('/APC', async (request, response) => {
   try {
     const data = await Prospect.find({ "Cedula": cedula }, {})
     if (data.length) {
-      console.log('Hola por aqui-2222', data.length)
       const created = data[0].Created
       const today = new Date()
       antigRef = Math.round((today.getTime() - created.getTime())/(24*60*60*1000))
 
-      console.log('antigRef < 91')
+      console.log('antigRef < 91', antigRef, created, today)
       if(antigRef < 91) {
-        datos = data.APC
+        datos = data[0].APC
       }
     }
     if(!Object.keys(datos).length) {
-      console.log('Hola por aqui-1111')
       await leerRefAPC(request, response)
     } else {
       formatData(datos, response)
-      console.log('Hola por aqui-3333')
     }
   } catch(err)  {
     formatData(datos, response)
-    console.log('Hola por aqui-4444')
   }
 })
 const leerRefAPC = async (request, response) => {

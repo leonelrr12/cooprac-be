@@ -79,10 +79,6 @@ admRoutes.post('/prospects', (request, response) => {
     hipoteca,abonoHipoteca
   ]
 
-  console.log(sql);
-  console.log(params);
-  // response.send('Ok!')
-
   config.cnn.query(sql, params, (error, results, next) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
