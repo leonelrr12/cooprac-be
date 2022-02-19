@@ -2,14 +2,13 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const prospectSchema = new Schema({
-  Email: {type: String},
-  Nombre: {type: String},
-  Apellido_Paterno: {type: String},
-  "Creado el": {type: Date, default: new Date()},
+  Cedula: {type: String},
+  Created: {type: Date, default: new Date()},
 
   APC: {
     Generales: {
       Nombre: {type: String},
+      Apellido: {type: String},
       Id: {type: String},
       Usuario: {type: String},
       Asociado: {type: String},

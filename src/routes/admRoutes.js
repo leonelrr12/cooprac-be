@@ -25,11 +25,13 @@ admRoutes.post('/prospects', (request, response) => {
   sql += " department,specialty,no_ip,phoneNumber_2,"
   sql += " work_phone_2,work_phone_ext_2,startDate,"
   sql += " doctor,doctorSpecialty,healthCenter,"
-  sql += " cellPhone_2,socialSecurity,placeOfBirth,qaHealthy,monthlyPay,product"
+  sql += " cellPhone_2,socialSecurity,placeOfBirth,qaHealthy,monthlyPay,product,id_agente,"
+  sql += " autoMarca,autoModelo,auto_aaaa,autoValor,autoAbono,hipoteca,hipoAbono"
 
   sql += ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
   sql += "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-  sql += "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+  sql += "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
+  sql += "?,?,?,?,?,?,?)"
 
   let {
     id_personal,idUser,apcReferencesUrl,apcLetterUrl,sponsor,
@@ -71,7 +73,10 @@ admRoutes.post('/prospects', (request, response) => {
     work_phone_2,work_phone_ext_2,startDate,
     doctor,doctorSpecialty,healthCenter,
     cellPhone_2,socialSecurity,placeOfBirth,qaHealthy,
-    monthlyPay,product
+    monthlyPay,product,config.ORIGEN.agente,
+
+    marca,modelo,yyyyModelo,valorAuto,abonoAuto,
+    hipoteca,abonoHipoteca
   ]
 
   console.log(sql);

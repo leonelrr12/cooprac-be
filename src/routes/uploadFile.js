@@ -90,33 +90,37 @@ fileRoutes.get('/list', async (request, response) => {
   })
 })
 
+const separator = (numb) => {
+  var str = numb.toString().split(".");
+  if(str.length > 1) {
+    str[1] = str[1].padEnd(2, '0')
+  } else {
+    str[1]='00'
+  }
+  str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return str.join(".");
+}
 
 fileRoutes.post('/createPDF', async (req, res) => {
 
-  const { idMongo } = req.body
+  const { cedula } = req.body
 
   await mongoose.connect(config.MONGODB_URI, {
     useNewUrlParser: true, 
     useUnifiedTopology: true
   })
-  .then(() => console.log('MongoDB Connected...'))
+  .then(() => console.log('MongoDB Connected...PDF'))
   .catch((err) => console.log(err))
 
   try {
-    // PONER A LEER POR EMAIL
-    result = await Prospect.findById(idMongo)
+    result = await Prospect.find({ "Cedula": cedula }, {})
 
-    const separator = (numb) => {
-      var str = numb.toString().split(".");
-      if(str.length > 1) {
-        str[1] = str[1].padEnd(2, '0')
-      } else {
-        str[1]='00'
-      }
-      str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return str.join(".");
+    console.log('Hola por aqui-777', result)
+    if(!result.length) {
+      return
     }
-
+    const APC = await result[0].APC
+    console.log(APC)
     const hoyes = new Date().toLocaleString()
     const gen = result.APC.Generales
     const ref = result.APC.Referencias

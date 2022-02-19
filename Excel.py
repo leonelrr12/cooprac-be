@@ -147,6 +147,37 @@ def insert_corr(id, idDist, idProv, name, cnn):
             cursor.close()
             print("MySQL connection is closed")
 
+def insert_marca(id, name, cnn):
+    try:
+        cursor = cnn.cursor()
+        mySql_insert_query = "INSERT INTO marcas_autos (id, name, is_active) VALUES (%s,%s,1)"
+
+        record = (id,name)
+        cursor.execute(mySql_insert_query, record)
+    except mysql.connector.Error as error:
+        print("Failed to insert into MySQL table {}".format(error))
+    
+    finally:
+        if cnn.is_connected():
+            cursor.close()
+            print("MySQL connection is closed")
+
+def insert_modelo(id, id_marca, name, cnn):
+    try:
+        cursor = cnn.cursor()
+        mySql_insert_query = "INSERT INTO modelos_autos (id, id_marca, name, is_active) VALUES (%s,%s,%s,1)"
+
+        record = (id,id_marca,name)
+        print(record)
+        cursor.execute(mySql_insert_query, record)
+    except mysql.connector.Error as error:
+        print("Failed to insert into MySQL table {}".format(error))
+    
+    finally:
+        if cnn.is_connected():
+            cursor.close()
+            # print("MySQL connection is closed")
+
 
 # # librerias para correos
 # import smtplib, ssl
@@ -156,11 +187,11 @@ import openpyxl
 
 def fcnn():
     return mysql.connector.connect(
-    host="finanservs.cdxgqqkffqvx.us-east-2.rds.amazonaws.com",
-    user="admin",
-    password="Cooprac2616",
+    host="db-mysql-nyc3-04501-do-user-7220305-0.b.db.ondigitalocean.com",
+    user="dbkotowa",
+    password="tgxs08h92dmgnrcf",
     database="finanservs",
-    port="3306"
+    port="25060"
 )
 
 # # No. 1
@@ -334,12 +365,55 @@ def corr():
         print("MySQL Finish ...")
 
 
+# # No. 8
+def marca():
+    fichero = r"D:\Documentos\Desarrollo Web\Finanservs\Cooprac\Otros\Marcas.xlsx"
+
+    book = openpyxl.load_workbook(fichero, data_only=True)
+    hoja = book.active
+
+    celdas = hoja['A2' : 'B57']
+
+    cnn = fcnn()
+
+    print("Marcas ...")
+    for fila in celdas:
+        data = [celda.value for celda in fila]
+        insert_marca(data[0], data[1], cnn)
+
+    cnn.commit()
+    if cnn.is_connected():
+        cnn.close()
+        print("MySQL Finish ...")
+
+# # No. 9
+def modelo():
+    fichero = r"D:\Documentos\Desarrollo Web\Finanservs\Cooprac\Otros\Modelos.xlsx"
+
+    book = openpyxl.load_workbook(fichero, data_only=True)
+    hoja = book.active
+
+    celdas = hoja['A2' : 'C317']
+
+    cnn = fcnn()
+
+    print("Modelos ...")
+    for fila in celdas:
+        data = [celda.value for celda in fila]
+        insert_modelo(data[0], data[1], data[2], cnn)
+
+    cnn.commit()
+    if cnn.is_connected():
+        cnn.close()
+        print("MySQL Finish ...")
 
 #acp()
 #lw()
 #inst()
 #plan()
-pais()
+#pais()
 #prov()
 #dist()
 #corr()
+marca()
+modelo()
