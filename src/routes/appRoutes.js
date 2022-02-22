@@ -328,7 +328,6 @@ appRoutes.post('/clientify-rechazo', async (req, res) => {
   .then(result => res.json(result.data))
   // .then(result => console.log(result.data))
   .catch(error => console.log('error', error))
-
 })
 
 

@@ -26,12 +26,13 @@ admRoutes.post('/prospects', (request, response) => {
   sql += " work_phone_2,work_phone_ext_2,startDate,"
   sql += " doctor,doctorSpecialty,healthCenter,"
   sql += " cellPhone_2,socialSecurity,placeOfBirth,qaHealthy,monthlyPay,product,id_agente,"
-  sql += " autoMarca,autoModelo,auto_aaaa,autoValor,autoAbono,hipoteca,hipoAbono"
+  sql += " autoMarca,autoModelo,auto_aaaa,autoValor,autoAbono,hipoteca,hipoAbono,"
+  sql += " reason, otherReason"
 
   sql += ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
   sql += "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
   sql += "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-  sql += "?,?,?,?,?,?,?)"
+  sql += "?,?,?,?,?,?,?,?,?)"
 
   let {
     id_personal,idUser,apcReferencesUrl,apcLetterUrl,sponsor,
@@ -50,7 +51,8 @@ admRoutes.post('/prospects', (request, response) => {
     weight, weightUnit, height, heightUnit, aceptaAPC: aceptaApc,
     qaHealthy,monthlyPay,product,
     marca, modelo, yyyyModelo, valorAuto, abonoAuto,
-    hipoteca, abonoHipoteca 
+    hipoteca, abonoHipoteca,
+    reason, otherReason
   } = request.body
 
   estado = 1 // Nuevo registro queda con estatus de nuevo
@@ -76,7 +78,8 @@ admRoutes.post('/prospects', (request, response) => {
     monthlyPay,product,config.ORIGEN.agente,
 
     marca,modelo,yyyyModelo,valorAuto,abonoAuto,
-    hipoteca,abonoHipoteca
+    hipoteca,abonoHipoteca,
+    reason, otherReason
   ]
 
   config.cnn.query(sql, params, (error, results, next) => {
@@ -129,7 +132,7 @@ admRoutes.get('/prospects/aproach/:id_personal', (request, response) => {
   sql += " FROM prospects a"
   sql += " INNER JOIN entities_f b ON b.id_ruta=a.entity_f"
   sql += " INNER JOIN estados_tramite c ON c.id=a.estado"
-  sql += " WHERE id_personal = ?"
+  sql += " WHERE id_personal = ? and entity_f='810'"
 
   // console.log(sql)
   const params = [request.params.id_personal];
