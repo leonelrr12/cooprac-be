@@ -53,7 +53,7 @@ appRoutes.post('/email', async (req, res) => {
   const { email: euser, asunto, mensaje, telefono, monto, nombre, banco } = req.body
 
   let emails = null
-  await axios.get(`http://localhost:3001/api/entities_f/${banco}`)
+  await axios.get(`http://localhost:5005/api/entities_f/${banco}`)
   .then(res => {
     const result = res.data
     emails = result[0].emails
@@ -460,9 +460,13 @@ const leerRefAPC = async (request, response) => {
   axios.post(URL,{"usuarioconsulta": usuarioApc, "claveConsulta": claveApc, "IdentCliente": id, "TipoCliente": tipoCliente, "Producto": productoApc})
   .then(async (res) => {
     const result = res.data
-    idMongo = await guardarRef(result, id)
-    datos = await leerRefMongo(idMongo)
-    formatData(datos, response)
+    if(result.mensaje === 'Ok') {
+      idMongo = await guardarRef(result, id)
+      datos = await leerRefMongo(idMongo)
+      formatData(datos, response)
+    } else {
+      formatData([], response)
+    }
   }).catch((error) => {
     formatData([], response)
   });
@@ -470,13 +474,25 @@ const leerRefAPC = async (request, response) => {
 }
 const guardarRef = async (refApc, id) => {
 
-  const { nombre, apellido, idenT_CLIE, noM_ASOC, } = refApc.gen
+  // console.log(refApc)
+  // "valido": "1",
+  // "estatus": "4",
+  // "mensaje": "Ok",
+  // "gen": {
+  //     "nombre": "DAYANIS I",
+  //     "apellido": "OSORIO N  ",
+  //     "idenT_CLIE": "8-838-264",
+  //     "feC_CREACION": "",
+  //     "noM_ASOC": "ACSORAT, S.A.",
+  //     "feC_DEFUNCION": ""
+  // },
+  const { nombre, apellido, idenT_CLIE, noM_ASOC } = refApc.gen
 
   const Generales = {
     "Nombre": nombre,
     "Apellido": apellido,
     "Id": idenT_CLIE,
-    "Usuario": "WSACSORAT001",
+    "Usuario": usuarioApc,
     "Asociado": noM_ASOC
   }
 
