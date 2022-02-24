@@ -438,7 +438,6 @@ appRoutes.post('/APC', async (request, response) => {
       const today = new Date()
       antigRef = Math.round((today.getTime() - created.getTime())/(24*60*60*1000))
 
-      console.log('antigRef < 91', antigRef, created, today)
       if(antigRef < 91) {
         datos = data[0].APC
       }
@@ -478,14 +477,7 @@ const guardarRef = async (refApc, id) => {
   // "valido": "1",
   // "estatus": "4",
   // "mensaje": "Ok",
-  // "gen": {
-  //     "nombre": "DAYANIS I",
-  //     "apellido": "OSORIO N  ",
-  //     "idenT_CLIE": "8-838-264",
-  //     "feC_CREACION": "",
-  //     "noM_ASOC": "ACSORAT, S.A.",
-  //     "feC_DEFUNCION": ""
-  // },
+
   const { nombre, apellido, idenT_CLIE, noM_ASOC } = refApc.gen
 
   const Generales = {
