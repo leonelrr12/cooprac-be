@@ -4,7 +4,7 @@ const Prospect = require('../models/Prospect')
 
 const multer = require('multer')
 const config = require('../utils/config')
-const { uploadFile, uploadFile2 } = require("../utils/multer")
+const { uploadFile, uploadFile2a } = require("../utils/multer")
 const pdfMake = require('pdfmake/build/pdfmake');
 const pdfPrinter = require('pdfmake/src/printer');
 const pdfFonts = require('pdfmake/build/vfs_fonts');
@@ -48,7 +48,7 @@ fileRoutes.post('/file', upload.single('idUrl'), async (req, res) => {
 fileRoutes.post('/file2', upload2.single('idUrl'), async (req, res) => {
   const { fileName, entity_f, nameImage, prospect } = req.body
   console.log(fileName, entity_f, nameImage)
-  const result = await uploadFile2(fileName, entity_f, nameImage, prospect)
+  const result = await uploadFile2a(fileName, entity_f, nameImage, prospect)
   console.log(result)
   try {
     fs.unlinkSync(fileName)
@@ -57,6 +57,8 @@ fileRoutes.post('/file2', upload2.single('idUrl'), async (req, res) => {
   }
   res.send(result)
 })
+
+
 
 fileRoutes.get('/list', async (request, response) => {
   const { bucket, entity_f } = request.body
@@ -302,106 +304,106 @@ fileRoutes.post('/createPDF', async (req, res) => {
   }
 })
 
-fileRoutes.post('/authApcPDF', async (req, res) => {
+// fileRoutes.post('/authApcPDF', async (req, res) => {
 
-  const { body } = req
-  const { nombre, cedula, sign }  = body
-  const fecha = 'Panamá, ' + new Date().toLocaleDateString()
+//   const { body } = req
+//   const { nombre, cedula, sign }  = body
+//   const fecha = 'Panamá, ' + new Date().toLocaleDateString()
 
-    const dd = {
-      pageSize: 'LETTER',
-      pageMargins: [40,40,40,40],
+//     const dd = {
+//       pageSize: 'LETTER',
+//       pageMargins: [40,40,40,40],
 
-      content: [
-        { text: 'AUTORIZACIÓN DE LA APC\n\n', style: 'header' },
+//       content: [
+//         { text: 'AUTORIZACIÓN DE LA APC\n\n', style: 'header' },
 
-        { text: fecha }, '\n\n',
-        'Señores\n',
-        'ACsoraT, S. A.\n',
-        'Panamá\n\n',
+//         { text: fecha }, '\n\n',
+//         'Señores\n',
+//         'Cooprac, R.L.\n',
+//         'Panamá\n\n',
 
-        {
-          layout: 'noBorders',
-          table: {
-            // headers are automatically repeated if the table spans over multiple pages
-            // you can declare how many rows should be treated as headers
-            widths: ['auto','*'],
-            body: [
-              ['Estimado señor: ', { text: nombre, bold: true }],
-            ]
-          }
-        },
-        { text: 'Por este medio autorizo(amos) expresamente a ACsoraT, S. A., sus subsidiarias y/o afiliadas, cesionarios o sucesoras, así como cualquier compañía que por operación de cesión, administración o compra de cartera adquiera los derechos de mi crédito, a que de conformidad con lo expresado en el artículo 24 y demás disposiciones aplicables de la Ley 24 de 22 de mayo de 2002, solicite, consulte, recopile, intercambie y transmita a cualquier agencia de información de datos, bancos o agentes económicos informaciones relacionadas con obligaciones o transacciones crediticias que mantengo o pudiera mantener con dichos agentes económicos de la localidad, sobre mi(nuestros) historial de crédito y relaciones con acreedores. También queda facultado el ACsoraT, S. A., sus subsidiarias y/o afiliadas, cesionarios o sucesoras, así como cualquier compañía que por una operación de cesión, administración o compra de cartera adquiera los derechos de mi crédito, a que solicite y obtenga información de instituciones gubernamentales relacionadas con las obligaciones o transacciones crediticias arriba referidas. Así mismo, exonero(amos) de cualquier consecuencia o responsabilidad resultante del ejercicio de solicitar o suministrar información, o por razón de cualesquiera autorizaciones contenidas en la presente carta, al ACsoraT, S. A, a sus compañías afiliadas, subsidiarias, cesionarios y/o sucesoras, a sus empleados, ejecutivos, directores dignatarios o apoderados, así como cualquier compañía que por una operación de cesión, administración o compra de cartera adquiera los derechos de mi crédito.\n\n\n', style: 'detail' },
-        'Atentamente\n',
+//         {
+//           layout: 'noBorders',
+//           table: {
+//             // headers are automatically repeated if the table spans over multiple pages
+//             // you can declare how many rows should be treated as headers
+//             widths: ['auto','*'],
+//             body: [
+//               ['Estimado señor: ', { text: nombre, bold: true }],
+//             ]
+//           }
+//         },
+//         { text: 'Por este medio autorizo(amos) expresamente a Cooprac, R.L., sus subsidiarias y/o afiliadas, cesionarios o sucesoras, así como cualquier compañía que por operación de cesión, administración o compra de cartera adquiera los derechos de mi crédito, a que de conformidad con lo expresado en el artículo 24 y demás disposiciones aplicables de la Ley 24 de 22 de mayo de 2002, solicite, consulte, recopile, intercambie y transmita a cualquier agencia de información de datos, bancos o agentes económicos informaciones relacionadas con obligaciones o transacciones crediticias que mantengo o pudiera mantener con dichos agentes económicos de la localidad, sobre mi(nuestros) historial de crédito y relaciones con acreedores. También queda facultado el Cooprac, R.L., sus subsidiarias y/o afiliadas, cesionarios o sucesoras, así como cualquier compañía que por una operación de cesión, administración o compra de cartera adquiera los derechos de mi crédito, a que solicite y obtenga información de instituciones gubernamentales relacionadas con las obligaciones o transacciones crediticias arriba referidas. Así mismo, exonero(amos) de cualquier consecuencia o responsabilidad resultante del ejercicio de solicitar o suministrar información, o por razón de cualesquiera autorizaciones contenidas en la presente carta, al ACsoraT, S. A, a sus compañías afiliadas, subsidiarias, cesionarios y/o sucesoras, a sus empleados, ejecutivos, directores dignatarios o apoderados, así como cualquier compañía que por una operación de cesión, administración o compra de cartera adquiera los derechos de mi crédito.\n\n\n', style: 'detail' },
+//         'Atentamente\n',
 
-        {
-          layout: 'noBorders',
-          table: {
-            // headers are automatically repeated if the table spans over multiple pages
-            // you can declare how many rows should be treated as headers
-            widths: ['auto','*'],
-            body: [
-              ['Nombre: ', { text: nombre, decoration: 'underline' }],
-            ]
-          }
-        },
-        {
-          layout: 'noBorders',
-          table: {
-            // headers are automatically repeated if the table spans over multiple pages
-            // you can declare how many rows should be treated as headers
-            widths: ['auto','*'],
-            body: [
-              ['Cédula: ', { text: cedula, decoration: 'underline' }],
-            ]
-          }
-        },
-        '\n\n',
-        'Fundamento legal: Ley 24 de 22 de mayo de 2002.',
-        '\n',
-        {
-          // under NodeJS (or in case you use virtual file system provided by pdfmake)
-          // you can also pass file names here
-          image: sign,
-          width: 150,
-          height: 75,
-          alignment: 'center'
-        }
-      ],
-      styles: {
-        header: {
-          fontSize: 14,
-          bold: true,
-          alignment: 'center'
-        },
-        detail: {
-          fontSize: 12,
-          bold: false,
-          alignment: 'justify'
-        },
-      }
-    }
+//         {
+//           layout: 'noBorders',
+//           table: {
+//             // headers are automatically repeated if the table spans over multiple pages
+//             // you can declare how many rows should be treated as headers
+//             widths: ['auto','*'],
+//             body: [
+//               ['Nombre: ', { text: nombre, decoration: 'underline' }],
+//             ]
+//           }
+//         },
+//         {
+//           layout: 'noBorders',
+//           table: {
+//             // headers are automatically repeated if the table spans over multiple pages
+//             // you can declare how many rows should be treated as headers
+//             widths: ['auto','*'],
+//             body: [
+//               ['Cédula: ', { text: cedula, decoration: 'underline' }],
+//             ]
+//           }
+//         },
+//         '\n\n',
+//         'Fundamento legal: Ley 24 de 22 de mayo de 2002.',
+//         '\n',
+//         {
+//           // under NodeJS (or in case you use virtual file system provided by pdfmake)
+//           // you can also pass file names here
+//           image: sign,
+//           width: 150,
+//           height: 75,
+//           alignment: 'center'
+//         }
+//       ],
+//       styles: {
+//         header: {
+//           fontSize: 14,
+//           bold: true,
+//           alignment: 'center'
+//         },
+//         detail: {
+//           fontSize: 12,
+//           bold: false,
+//           alignment: 'justify'
+//         },
+//       }
+//     }
 
-    var fonts = {
-      Roboto: {
-          normal: './public/fonts/Roboto-Regular.ttf',
-          bold: './public/fonts/Roboto-Medium.ttf',
-          italics: './public/fonts/Roboto-Italic.ttf',
-          bolditalics: './public/fonts/Roboto-MediumItalic.ttf'
-      }
-    };
+//     var fonts = {
+//       Roboto: {
+//           normal: './public/fonts/Roboto-Regular.ttf',
+//           bold: './public/fonts/Roboto-Medium.ttf',
+//           italics: './public/fonts/Roboto-Italic.ttf',
+//           bolditalics: './public/fonts/Roboto-MediumItalic.ttf'
+//       }
+//     };
 
-    let fileName = path.join(`./pdfs/tmp-pdf2-${Date.now()}.pdf`)
+//     let fileName = path.join(`./pdfs/tmp-pdf2-${Date.now()}.pdf`)
 
-    const printer = new pdfPrinter(fonts)
-    var pdfDoc = printer.createPdfKitDocument(dd);
-    pdfDoc.pipe(fs.createWriteStream(fileName)).on('finish',function(){
-        //success
-    });
-    pdfDoc.end();
+//     const printer = new pdfPrinter(fonts)
+//     var pdfDoc = printer.createPdfKitDocument(dd);
+//     pdfDoc.pipe(fs.createWriteStream(fileName)).on('finish',function(){
+//         //success
+//     });
+//     pdfDoc.end();
 
-    res.json({'fileName': fileName})
-})
+//     res.json({'fileName': fileName})
+// })
 
 
 

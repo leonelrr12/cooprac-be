@@ -50,4 +50,17 @@ const uploadFile2 = async (file, entity_f, nameImage, id) => {
   return await s3.upload(uploadParams).promise()
 }
 
-module.exports = { uploadFile, s3, uploadFile2 }
+
+const uploadFile2a = (file, entity_f, nameImage, id) => {
+  return new Promise( async (resolve, reject) => {
+    const fileStream = fs.createReadStream(file)
+    const uploadParams = {
+      Bucket: AWS_BUCKET_NAME + "/" + entity_f + "/" + nameImage,
+      Body: fileStream,
+      Key: id
+    }
+    resolve(await s3.upload(uploadParams).promise())
+  })
+}
+
+module.exports = { uploadFile, s3, uploadFile2, uploadFile2a }

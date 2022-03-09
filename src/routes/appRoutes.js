@@ -9,6 +9,12 @@ const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 const OAuth2 = google.auth.OAuth2
 
+const pdfMake = require('pdfmake/build/pdfmake');
+const pdfPrinter = require('pdfmake/src/printer');
+const pdfFonts = require('pdfmake/build/vfs_fonts');
+const fs = require('fs')
+const path = require('path');
+
 // const { sendEmail: key } = config
 const { sendGEmail: key } = config
 const OAuth2Client = new OAuth2(key.clientId, key.clientSecret, key.redirectUri)
@@ -50,7 +56,7 @@ appRoutes.get('/prospects', (request, response) => {
 
 appRoutes.post('/email', async (req, res) => {
 
-  const { email: euser, asunto, mensaje, telefono, monto, nombre, banco } = req.body
+  const { email: euser, asunto, mensaje, telefono, monto, nombre, banco, cedula, sign } = req.body
 
   let emails = null
   await axios.get(`http://localhost:5005/api/entities_f/${banco}`)
@@ -69,55 +75,70 @@ appRoutes.post('/email', async (req, res) => {
   }
   emails += ", rsanchez2565@gmail.com, guasimo01@gmail.com"
 
-  const htmlEmail = `
-    <h3>Nuevo Prospecto desde Finanservs.com</h3>
-    <ul>
-      <li>Email: ${euser}</li>
-      <li>Nombre: ${nombre}</li>
-      <li>Teléfono: ${telefono}</li>
-      <li>Monto Solicitado: ${monto}</li>
-    </ul>
-    <h3>Mensaje</h3>
-    <p>${mensaje}</p>
-  `
+  let fileAtach = ""
+  try {
+    fileAtach = await authApc(nombre, cedula, sign)
 
-  const send_mail = async () => {
-    const accessToken = await OAuth2Client.getAccessToken()
-    try {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          type: 'OAuth2',
-          user: key.EMAIL_USER, 
-          clientId: key.clientId, 
-          clientSecret: key.clientSecret,
-          refreshToken: key.refreshToken,
-          accessToken: accessToken
-        },
-        tls: {
-          rejectUnauthorized: false
+    const htmlEmail = `
+      <h3>Nuevo Prospecto desde Finanservs.com</h3>
+      <ul>
+        <li>Email: ${euser}</li>
+        <li>Nombre: ${nombre}</li>
+        <li>Teléfono: ${telefono}</li>
+        <li>Monto Solicitado: ${monto}</li>
+      </ul>
+      <h3>Mensaje</h3>
+      <h3>Adjuntamos autorizacion de APC debidamente firmada.</h3>
+      <p>${mensaje}</p>
+    `
+
+    const send_mail = async () => {
+      const accessToken = await OAuth2Client.getAccessToken()
+      try {
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            type: 'OAuth2',
+            user: key.EMAIL_USER, 
+            clientId: key.clientId, 
+            clientSecret: key.clientSecret,
+            refreshToken: key.refreshToken,
+            accessToken: accessToken
+          },
+          tls: {
+            rejectUnauthorized: false
+          }
+        })
+    
+        const mailOptions = {
+          from: key.EMAIL_FROM,
+          to: emails,
+          subject: asunto,
+          text: mensaje,
+          html: htmlEmail,
+          attachments:
+            {   // utf-8 string as an attachment
+                filename: 'AutorizacionAPC.pdf',
+                path: fileAtach,
+                content: 'Autorización APC'
+            },
         }
-      })
-  
-      const mailOptions = {
-        from: key.EMAIL_FROM,
-        to: emails,
-        subject: asunto,
-        text: mensaje,
-        html: htmlEmail
+    
+        const result = await transporter.sendMail(mailOptions)
+        transporter.close()
+        // console.log(result)
+        return result
+      } catch (err) {
+        console.log('Estamos aqui: ', err)
       }
-  
-      const result = await transporter.sendMail(mailOptions)
-      transporter.close()
-      // console.log(result)
-      return result
-    } catch (err) {
-      console.log('Estamos aqui: ', err)
     }
-  }
-  send_mail()
-    .then( r => res.status(200).send('Enviado!') )
-    .catch( e => console.log(e.message) )
+    send_mail()
+      // .then( r => res.status(200).send('Enviado!') )
+      .then( r => res.json({ fileName: fileAtach }) )
+      .catch( e => console.log(e.message) )
+  } catch (err) {
+    console.log('Estamos aqui 2: ', err)
+  }    
 })
 
 
@@ -420,6 +441,14 @@ appRoutes.post('/leerAPC', (request, response) => {
 })
 appRoutes.post('/APC', async (request, response) => {
   const {id: cedula } = request.body
+  
+  //****************//
+  //****************//
+  // QUITAR CUANDO SE QUIERA HACER LAS CONSULTAS EN LINEA A LA APC
+  formatDataBK(response)
+  return
+  //****************//
+  //****************//
 
   mongoose.connect(config.MONGODB_URI, {
     useNewUrlParser: true, 
@@ -715,7 +744,42 @@ const formatData = (result, response) => {
   }  
   response.json(datos)
 }
+const formatDataBK = (response) => {
 
+  let datos = [ 
+    {
+      status: true,
+      message: "OffLine",
+
+      Agente_Economico: "", 
+      Dias_Atraso: 0,
+      Estado: "", 
+      Fec_Actualiazacion: "", 
+      Fec_Ini_Relacion: "", 
+      Fec_Prescripcion: "", 
+      Fec_Ultimo_pago: "", 
+      Fec_Vencimiento: "", 
+      Forma_Pago: "", 
+      Historial: "", 
+      Letra: 0,
+      Monto_Original: 0,
+      Monto_Utimo_Pago: 0,
+      Num_Pagos: 0,
+      Observacion: "", 
+      Referencia: "", 
+      Relacion: "", 
+      Saldo_Actual: 0,
+
+      score: "0",
+      pi: "0",
+      exclusion: "0", 
+      montoAplicado: 0,
+      montoARecibir: 0,
+    }
+  ]
+
+  response.json(datos)
+}
 
 appRoutes.get('/sectors', (request, response) => {
   const sql = "SELECT * FROM sectors"
@@ -1310,5 +1374,109 @@ appRoutes.get('/subgrupo_institution', (request, response) => {
   })
 })
 
+const authApc = (nombre, cedula, sign) => {
+  return new Promise((resolve, reject) => {
+    const fileName = authApcPDF(nombre, cedula, sign)
+    resolve(fileName)
+  })
+}
+const authApcPDF = (nombre, cedula, sign) => {
+
+  const fecha = 'Panamá, ' + new Date().toLocaleDateString()
+
+    const dd = {
+      pageSize: 'LETTER',
+      pageMargins: [40,40,40,40],
+
+      content: [
+        { text: 'AUTORIZACIÓN DE LA APC\n\n', style: 'header' },
+
+        { text: fecha }, '\n\n',
+        'Señores\n',
+        'Cooprac, R.L.\n',
+        'Panamá\n\n',
+
+        {
+          layout: 'noBorders',
+          table: {
+            // headers are automatically repeated if the table spans over multiple pages
+            // you can declare how many rows should be treated as headers
+            widths: ['auto','*'],
+            body: [
+              ['Estimado señor: ', { text: nombre, bold: true }],
+            ]
+          }
+        },
+        { text: 'Por este medio autorizo(amos) expresamente a Cooprac, R.L., sus subsidiarias y/o afiliadas, cesionarios o sucesoras, así como cualquier compañía que por operación de cesión, administración o compra de cartera adquiera los derechos de mi crédito, a que de conformidad con lo expresado en el artículo 24 y demás disposiciones aplicables de la Ley 24 de 22 de mayo de 2002, solicite, consulte, recopile, intercambie y transmita a cualquier agencia de información de datos, bancos o agentes económicos informaciones relacionadas con obligaciones o transacciones crediticias que mantengo o pudiera mantener con dichos agentes económicos de la localidad, sobre mi(nuestros) historial de crédito y relaciones con acreedores. También queda facultado el Cooprac, R.L., sus subsidiarias y/o afiliadas, cesionarios o sucesoras, así como cualquier compañía que por una operación de cesión, administración o compra de cartera adquiera los derechos de mi crédito, a que solicite y obtenga información de instituciones gubernamentales relacionadas con las obligaciones o transacciones crediticias arriba referidas. Así mismo, exonero(amos) de cualquier consecuencia o responsabilidad resultante del ejercicio de solicitar o suministrar información, o por razón de cualesquiera autorizaciones contenidas en la presente carta, al ACsoraT, S. A, a sus compañías afiliadas, subsidiarias, cesionarios y/o sucesoras, a sus empleados, ejecutivos, directores dignatarios o apoderados, así como cualquier compañía que por una operación de cesión, administración o compra de cartera adquiera los derechos de mi crédito.\n\n\n', style: 'detail' },
+        'Atentamente\n',
+
+        {
+          layout: 'noBorders',
+          table: {
+            // headers are automatically repeated if the table spans over multiple pages
+            // you can declare how many rows should be treated as headers
+            widths: ['auto','*'],
+            body: [
+              ['Nombre: ', { text: nombre, decoration: 'underline' }],
+            ]
+          }
+        },
+        {
+          layout: 'noBorders',
+          table: {
+            // headers are automatically repeated if the table spans over multiple pages
+            // you can declare how many rows should be treated as headers
+            widths: ['auto','*'],
+            body: [
+              ['Cédula: ', { text: cedula, decoration: 'underline' }],
+            ]
+          }
+        },
+        '\n\n',
+        'Fundamento legal: Ley 24 de 22 de mayo de 2002.',
+        '\n',
+        {
+          // under NodeJS (or in case you use virtual file system provided by pdfmake)
+          // you can also pass file names here
+          image: sign,
+          width: 150,
+          height: 75,
+          alignment: 'center'
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 14,
+          bold: true,
+          alignment: 'center'
+        },
+        detail: {
+          fontSize: 12,
+          bold: false,
+          alignment: 'justify'
+        },
+      }
+    }
+
+    var fonts = {
+      Roboto: {
+          normal: './public/fonts/Roboto-Regular.ttf',
+          bold: './public/fonts/Roboto-Medium.ttf',
+          italics: './public/fonts/Roboto-Italic.ttf',
+          bolditalics: './public/fonts/Roboto-MediumItalic.ttf'
+      }
+    };
+
+    let fileName = path.join(`./pdfs/tmp-pdf2-${Date.now()}.pdf`)
+
+    const printer = new pdfPrinter(fonts)
+    var pdfDoc = printer.createPdfKitDocument(dd);
+    pdfDoc.pipe(fs.createWriteStream(fileName)).on('finish',function(){
+        //success
+    });
+    pdfDoc.end();
+
+    return fileName
+}
 
 module.exports = appRoutes
