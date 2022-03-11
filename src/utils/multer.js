@@ -14,13 +14,16 @@ const s3 = new aws.S3({
 
 const uploadFile = async (file, entity_f, nameImage, id) => {
   const fileStream = fs.createReadStream(file.path)
-  console.log(file.filename)
-  const ext = file.filename.split('.')[1]
-
+  const extSplit = file.filename.split('.')
+  // console.log(file.filename, extSplit)
+  let ext = 'jpeg'
+  if (extSplit.length > 1) {
+    ext = extSplit[extSplit.length - 1]
+  }
   const uploadParams = {
     Bucket: AWS_BUCKET_NAME + "/" + entity_f + "/" + nameImage, 
     Body: fileStream,
-    Key: id+'.'+ext
+    Key: id + '.' + ext
   }
   return await s3.upload(uploadParams).promise()
 
