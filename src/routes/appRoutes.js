@@ -1160,7 +1160,7 @@ appRoutes.get('/districts/:id', (request, response) => {
 
 
 appRoutes.get('/counties', (request, response) => {
-  const sql = "SELECT * FROM counties"
+  const sql = "SELECT * FROM counties order by name"
 
   config.cnn.query(sql, (error, results) => {
     if (error) throw error
