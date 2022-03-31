@@ -9,6 +9,25 @@ admRoutes.get('/', (request, response) => {
 })
 
 
+
+admRoutes.post('/rechazos', (request, response) => {
+  let sql = "INSERT INTO rechazos ("
+  sql += " name,celular,email,causas,is_active"
+  sql += ") VALUES (?,?,?,?,1)"
+
+  let { name,cellPhone: celular,email,causas } = request.body
+  const params = [name,celular,email,causas]
+
+  config.cnn.query(sql, params, (error, results, next) => {
+    if (error) {
+      logger.error('Error SQL:', error.sqlMessage)
+      response.status(500)
+    } 
+    response.json({ message: 'Ok!' })
+  })
+})
+
+
 admRoutes.post('/prospects', (request, response) => {
   let sql = "INSERT INTO prospects (id_personal,id_referido,idUser,name,fname,fname_2,lname,lname_2,"
   sql += " entity_f,estado,email,cellphone,phoneNumber,idUrl,socialSecurityProofUrl,"
