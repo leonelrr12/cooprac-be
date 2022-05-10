@@ -147,7 +147,7 @@ admRoutes.get('/prospects/aproach/:id_personal', (request, response) => {
   sql += " jobSector,	occupation,	paymentFrecuency,	profession,	residenceType,"
   sql += " civil_status, province, district, salary, fcreate, fupdate,"
   sql += " c.name as estado, fcreate, datediff(now(), fcreate) as dias,"
-  sql += " quotation,	application, sign ,loanPP, loanAuto, loanTC, loanHip, cashOnHand,plazo"
+  sql += " quotation,	application, sign ,loanPP, loanAuto, loanTC, loanHip, cashOnHand, plazo"
   sql += " FROM prospects a"
   sql += " INNER JOIN entities_f b ON b.id_ruta=a.entity_f"
   sql += " INNER JOIN estados_tramite c ON c.id=a.estado"
