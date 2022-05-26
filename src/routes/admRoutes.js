@@ -38,7 +38,7 @@ admRoutes.post('/prospects', (request, response) => {
 
   sql += " residenceType,residenceMonthly,work_name,work_cargo,work_address,work_phone,work_phone_ext,work_month,"
   sql += " work_prev_name,work_prev_month,work_prev_salary,barrio_casa_calle,"
-  sql += " salary,honorarios,viaticos,termConds,"
+  sql += " salary,disponible,honorarios,viaticos,termConds,"
   sql += " weight,weightUnit,height,heightUnit,aceptaApc,nationality,"
 
   sql += " department,specialty,no_ip,phoneNumber_2,"
@@ -51,7 +51,7 @@ admRoutes.post('/prospects', (request, response) => {
   sql += ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
   sql += "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
   sql += "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-  sql += "?,?,?,?,?,?,?,?,?)"
+  sql += "?,?,?,?,?,?,?,?,?,?)"
 
   let {
     id_personal,idUser,apcReferencesUrl,apcLetterUrl,sponsor,
@@ -64,9 +64,10 @@ admRoutes.post('/prospects', (request, response) => {
     work_phone_2,work_phone_ext_2,startDate,
     doctor,doctorSpecialty,healthCenter,
     cellPhone_2,socialSecurity,placeOfBirth,
-    residenceType,residenceMonthly,work_name,work_cargo,work_address,work_phone,work_phone_ext,work_month,
+    residenceType,residenceMonthly,work_name,work_cargo,work_address,
+    work_phone,work_phone_ext,work_month,
     work_prev_name='N/A',work_prev_month=0,work_prev_salary=0,barrio_casa_calle,
-    salary,honorarios=0,viaticos=0,termConds,nationality=0,
+    salary=0,disponible=0,honorarios=0,viaticos=0,termConds,nationality=0,
     weight, weightUnit, height, heightUnit, aceptaAPC: aceptaApc,
     qaHealthy,monthlyPay,product,
     marca, modelo, yyyyModelo, valorAuto, abonoAuto,
@@ -87,7 +88,7 @@ admRoutes.post('/prospects', (request, response) => {
     district,sign,loanPP,loanAuto,loanTC,loanHip,cashOnHand,plazo,apcReferencesUrl,apcLetterUrl,
     residenceType,residenceMonthly,work_name,work_cargo,work_address,work_phone,work_phone_ext,work_month,
     work_prev_name,work_prev_month,work_prev_salary,barrio_casa_calle,
-    salary,honorarios,viaticos,termConds,
+    salary,disponible,honorarios,viaticos,termConds,
     weight, weightUnit, height, heightUnit, aceptaApc, nationality,
 
     department,specialty,noIp,phoneNumber_2,
