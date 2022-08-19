@@ -148,8 +148,8 @@ appRoutes.post('/clientify-token', async (req, res) => {
     method: "post",
     url: "https://api.clientify.net/v1/api-auth/obtain_token/", 
     data: {
-      "username": "rsanchez@finanservs.com",
-      "password": "Acsorat25"
+      "username": config.CLIENTIFY.username,
+      "password": config.CLIENTIFY.password
     },
     headers: {
       "Content-Type": "application/json"

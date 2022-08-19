@@ -54,6 +54,11 @@ const APC = {
   pass: process.env.APC_PASS
 }
 
+const CLIENTIFY = {
+  username: process.env.CF_USERNAME,
+  password: process.env.CF_PASSWORD
+}
+
 const ORIGEN = {
   nombre: process.env.NOMBRE,
   agente: process.env.AGENTE
@@ -70,5 +75,6 @@ module.exports = {
   cnn,
   MONGODB_URI,
   sendGEmail,
+  CLIENTIFY,
   ORIGEN
 }
