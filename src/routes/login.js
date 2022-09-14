@@ -21,7 +21,7 @@ loginRouter.get('/users', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
@@ -43,7 +43,7 @@ loginRouter.get('/new-user/:email',  (request, response) => {
   config.cnn.query(sql, params, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results[0])
@@ -65,7 +65,7 @@ loginRouter.get('/:email/:password',  (request, response) => {
    config.cnn.query(sql, params, async (error, rows, fields) => {
      if (error) {
        logger.error('Error SQL:', error.sqlMessage)
-       response.status(500)
+       return response.status(500)
      } 
      if (rows.length > 0) {   
        const {id, hash, name, is_active} = rows[0]  
@@ -121,7 +121,7 @@ loginRouter.put('/chgpwd', async (request, response) => {
   config.cnn.query(sql, params, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     response.send('Ok!')
   })

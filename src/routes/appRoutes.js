@@ -43,7 +43,7 @@ appRoutes.get('/prospects', (request, response) => {
   config.cnn.query(sql, params, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       const firma = results[0].sign.toString()
@@ -1194,7 +1194,7 @@ appRoutes.get('/type_documents', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
@@ -1211,7 +1211,7 @@ appRoutes.get('/marcas_autos', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
@@ -1226,7 +1226,7 @@ appRoutes.get('/modelos_autos', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
@@ -1241,7 +1241,7 @@ appRoutes.get('/cooprac_product', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
@@ -1256,7 +1256,7 @@ appRoutes.get('/tarifas_auto', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
@@ -1272,7 +1272,7 @@ appRoutes.get('/terms_loan', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
@@ -1288,7 +1288,7 @@ appRoutes.get('/nationality', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
@@ -1304,7 +1304,7 @@ appRoutes.get('/entities_f', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
@@ -1340,7 +1340,7 @@ appRoutes.get('/sector_profesion', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
@@ -1364,7 +1364,7 @@ appRoutes.get('/subgrupo_institution', (request, response) => {
   config.cnn.query(sql, (error, results) => {
     if (error) {
       logger.error('Error SQL:', error.sqlMessage)
-      response.status(500)
+      return response.status(500)
     } 
     if (results?.length > 0) {
       response.json(results)
