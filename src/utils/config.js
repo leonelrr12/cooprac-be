@@ -19,16 +19,14 @@ const MDB_PORT = process.env.MDB_PORT
 const MDB_PROTOCOL = process.env.MDB_PROTOCOL
 
 
-//SMTP G-Suit
+//SMTP gmail
 const sendGEmail = {
-  EMAIL_USER: process.env.EMAIL_USER,
-  EMAIL_PASS: process.env.EMAIL_PASS,
   EMAIL_FROM: process.env.EMAIL_FROM,
-  EMAIL_PORT: process.env.EMAIL_PORT,
-  clientId: '975688741054-qsre2625tkgveh5jjebdic210b9c2l7g.apps.googleusercontent.com',
-  clientSecret: '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',
-  refreshToken: '1//0410GTs7ttAJZCgYIARAAGAQSNwF-L9Ir4KaK6nX5h6m_AzNe1F1eQ-jh9JXUvS8lhwIBerNnAFKHyDqayFNo0Dol-kfHfYi0BP0',
-  redirectUri: 'https://developers.google.com/oauthplayground'
+  EMAIL_USER: process.env.EMAIL_USER,
+  CLIENT_ID: process.env.CLIENT_ID,
+  CLIENT_SECRET: process.env.CLIENT_SECRET,
+  REDIRECT_URI: process.env.REDIRECT_URI,
+  REFRESH_TOKEN: process.env.REFRESH_TOKEN
 }
 
 
